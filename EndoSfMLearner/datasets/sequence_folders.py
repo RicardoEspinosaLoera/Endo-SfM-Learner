@@ -40,6 +40,7 @@ class SequenceFolder(data.Dataset):
         shifts.pop(demi_length)
         for scene in self.scenes:
             print(np.genfromtxt(scene/'cam.txt').astype(np.float32).shape)
+            print(np.genfromtxt(scene/'cam.txt').astype(np.float32))
             intrinsics = np.genfromtxt(scene/'cam.txt').astype(np.float32).reshape((3, 3))
             imgs = sorted(scene.files('*.jpg'))
 
