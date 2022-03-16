@@ -42,6 +42,7 @@ class SequenceFolder(data.Dataset):
             #print(np.genfromtxt(scene/'cam.txt').astype(np.float32).shape)
             intrinsics = np.genfromtxt(scene/'cam.txt').astype(np.float32).reshape((3, 3))
             print(intrinsics)
+            
             imgs = sorted(scene.files('*.jpg'))
 
             if len(imgs) < sequence_length:
