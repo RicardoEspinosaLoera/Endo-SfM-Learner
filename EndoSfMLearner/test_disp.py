@@ -42,6 +42,7 @@ def main():
     disp_net.eval()
 
     dataset_dir = Path(args.dataset_dir)
+    print(dataset_dir)
 
 
     if args.dataset_list is not None:
