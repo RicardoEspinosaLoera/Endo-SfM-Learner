@@ -49,7 +49,7 @@ def main():
         with open(args.dataset_list, 'r') as f:
             test_files = list(f.read().splitlines())
     else:
-        test_files=sorted(dataset_dir.files('*.png'))
+        test_files=sorted(dataset_dir.files('*.jpg'))
 
     print('{} files to test'.format(len(test_files)))
   
