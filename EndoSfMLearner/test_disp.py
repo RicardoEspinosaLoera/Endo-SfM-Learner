@@ -73,6 +73,7 @@ def main():
         avg_time += elapsed_time
 
         pred_disp = output.cpu().numpy()[0,0]
+        print(pred_disp.shape)
 
         if j == 0:
             predictions = np.zeros((len(test_files), *pred_disp.shape))
