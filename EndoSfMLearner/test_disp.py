@@ -8,6 +8,7 @@ from tqdm import tqdm
 import models
 from torchvision import transforms
 import time
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description='Script for DispNet testing with corresponding groundTruth',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
