@@ -123,7 +123,7 @@ def main():
         #print(pred_disp.shape)
         depth_map = np.squeeze(pred_disp)
         colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP)
-        imageio.imsave(output_dir/+j+'.jpg', colored_map)
+        imageio.imsave(output_dir/+str(j)+'.jpg', colored_map)
 
         if j == 0:
             predictions = np.zeros((len(test_files), *pred_disp.shape))
