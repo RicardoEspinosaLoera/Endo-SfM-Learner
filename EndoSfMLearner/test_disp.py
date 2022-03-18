@@ -93,7 +93,7 @@ def main():
         pred_disp = output.cpu().numpy()[0,0]
         #print(pred_disp.shape)
         depth_map = np.squeeze(pred_disp)
-        colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP)
+        colored_map = _normalize_depth_for_display(depth_map, cmap='plasma')
         imageio.imsave(output_dir/+j+'.jpg', colored_map)
 
         if j == 0:
