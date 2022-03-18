@@ -23,6 +23,8 @@ parser.add_argument('--resnet-layers', required=False, type=int, default=18, cho
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
+CMAP = 'plasma'
+
 def load_tensor_image(filename, args):
     img = imread(filename).astype(np.float32)
     h,w,_ = img.shape
@@ -93,7 +95,7 @@ def main():
         pred_disp = output.cpu().numpy()[0,0]
         #print(pred_disp.shape)
         depth_map = np.squeeze(pred_disp)
-        colored_map = _normalize_depth_for_display(depth_map, cmap='plasma')
+        colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP)
         imageio.imsave(output_dir/+j+'.jpg', colored_map)
 
         if j == 0:
