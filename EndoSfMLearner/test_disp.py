@@ -9,6 +9,7 @@ import models
 from torchvision import transforms
 import time
 import matplotlib.pyplot as plt
+import imageio
 
 parser = argparse.ArgumentParser(description='Script for DispNet testing with corresponding groundTruth',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
