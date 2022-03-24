@@ -61,24 +61,6 @@ def _normalize_depth_for_display(depth,
   disp = disp[:keep_h]
   return disp
 
-def _normalize_depth_for_display(depth,
-                                 pc=95,
-                                 crop_percent=0,
-                                 normalizer=None,
-                                 cmap=CMAP):
-  """Converts a depth map to an RGB image."""
-  # Convert to disparity.
-  disp = 1.0 / (depth + 1e-6)
-  if normalizer is not None:
-    disp /= normalizer
-  else:
-    disp /= (np.percentile(disp, pc) + 1e-6)
-  disp = np.clip(disp, 0, 1)
-  disp = _gray2rgb(disp, cmap=cmap)
-  keep_h = int(disp.shape[0] * (1 - crop_percent))
-  disp = disp[:keep_h]
-  return disp
-
 @torch.no_grad()
 def main():
     args = parser.parse_args()
@@ -122,7 +104,7 @@ def main():
         pred_disp = output.cpu().numpy()[0,0]
         #print(pred_disp.shape)
         depth_map = np.squeeze(pred_disp)
-        colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP)
+        colored_map = _gray2rgb(depth_map, cmap=CMAP)
         imageio.imsave(output_dir/str(j)+'.jpg', colored_map)
 
         if j == 0:
