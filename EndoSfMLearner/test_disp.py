@@ -26,7 +26,7 @@ parser.add_argument('--resnet-layers', required=False, type=int, default=18, cho
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 CMAP = 'plasma'
-
+predictions = np.zeros()
 def load_tensor_image(filename, args):
     img = imread(filename).astype(np.float32)
     h,w,_ = img.shape
