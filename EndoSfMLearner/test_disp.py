@@ -73,7 +73,6 @@ def main():
     dataset_dir = Path(args.dataset_dir)
     print(dataset_dir)
 
-
     if args.dataset_list is not None:
         with open(args.dataset_list, 'r') as f:
             test_files = list(f.read().splitlines())
