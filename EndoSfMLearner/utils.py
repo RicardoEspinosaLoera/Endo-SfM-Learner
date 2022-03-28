@@ -46,7 +46,7 @@ def tensor2array(tensor, max_value=None, colormap='rainbow'):
     if tensor.ndimension() == 2 or tensor.size(0) == 1:
         norm_array = tensor.squeeze().numpy()/max_value
         array = COLORMAPS[colormap](norm_array).astype(np.float32)
-        array = np.delete(array,3)
+        print(array.shape)
         array = array.transpose(2, 0, 1)
 
     elif tensor.ndimension() == 3:
