@@ -85,6 +85,10 @@ def main():
             #depth = np.delete(depth, 3, 2)
             #imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), np.transpose(depth, (1, 2, 0)))
             print(depth.shape)
+            print(depth[0])
+            print(depth[1])
+            print(depth[2])
+            print(depth[3])
             imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), depth)
 
 
