@@ -76,18 +76,20 @@ def main():
         if args.output_disp:
             disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
             print(disp.shape)
+            print(np.transpose(disp, (1, 2, 0).shape)
             #disp = np.delete(disp, 3, 2)
             #imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), np.transpose(disp, (1, 2, 0)))
             #print(disp.shape)
-            imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), disp)
+            #imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), disp)
         if args.output_depth:
             depth = 1/output
             depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
             print(depht.shape)
+            print(np.transpose(depht, (1, 2, 0).shape)
             #depth = np.delete(depth, 3, 2)
             #imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), np.transpose(depth, (1, 2, 0)))
             #print(depth.shape)
-            imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), depth)
+            #imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), depth)
 
 
 
