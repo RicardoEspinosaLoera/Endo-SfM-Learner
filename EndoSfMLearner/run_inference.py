@@ -69,7 +69,7 @@ def main():
         tensor_img = ((tensor_img/255 - 0.45)/0.225).to(device)
 
         output = disp_net(tensor_img)[0]
-
+        print(output.shape)
         file_path, file_ext = file.relpath(args.dataset_dir).splitext()
         file_name = '-'.join(file_path.splitall())
 
