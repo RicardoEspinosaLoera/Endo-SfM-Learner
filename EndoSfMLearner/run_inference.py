@@ -72,7 +72,8 @@ def main():
         disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
         disp = np.transpose(disp, (1, 2, 0))
         print(disp.shape)
-        print(disp)
+        print(disp[0].shape)
+        print(disp[0])
 
         file_path, file_ext = file.relpath(args.dataset_dir).splitext()
         file_name = '-'.join(file_path.splitall())
