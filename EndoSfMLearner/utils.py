@@ -20,7 +20,6 @@ def high_res_colormap(low_res_cmap, resolution=1000, max_value=1):
                          for i in range(low_res.shape[1])], axis=1)
     return ListedColormap(high_res)
 
-
 def opencv_rainbow(resolution=1000):
     # Construct the opencv equivalent of Rainbow
     opencv_rainbow_data = (
@@ -38,7 +37,7 @@ COLORMAPS = {'rainbow': opencv_rainbow(),
              'magma': high_res_colormap(cm.get_cmap('magma')),
              'bone': cm.get_cmap('bone', 10000)}
 
-
+"""
 def tensor2array(tensor, max_value=None, colormap='rainbow'):
     tensor = tensor.detach().cpu()
     if max_value is None:
@@ -51,6 +50,20 @@ def tensor2array(tensor, max_value=None, colormap='rainbow'):
     elif tensor.ndimension() == 3:
         assert(tensor.size(0) == 3)
         array = 0.45 + tensor.numpy()*0.225
+    return array"""
+
+def tensor2array(tensor, max_value=255, colormap='rainbow'):
+    tensor = tensor.detach().cpu()
+    if max_value is None:
+        max_value = tensor.max().item()
+    if tensor.ndimension() == 2 or tensor.size(0) == 1:
+        norm_array = tensor.squeeze().numpy()/max_value
+        array = COLORMAPS[colormap](norm_array).astype(np.float32)[:,:,:3]
+        array = array.transpose(2, 0, 1)
+
+    elif tensor.ndimension() == 3:
+        assert(tensor.size(0) == 3)
+        array = 0.5 + tensor.numpy()*0.5
     return array
 
 def save_checkpoint(save_path, dispnet_state, exp_pose_state, is_best, filename='checkpoint.pth.tar'):
