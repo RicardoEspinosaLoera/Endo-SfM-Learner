@@ -62,7 +62,7 @@ def main():
         h, w, _ = img.shape
         if (not args.no_resize) and (h != args.img_height or w != args.img_width):
             #img = imresize(img, (args.img_height, args.img_width)).astype(np.float32)
-            img = cv2.resize(img, (args.img_width,args.img_height), interpolation = cv2.INTER_AREA)
+            img = cv2.resize(img, (args.img_width,args.img_height), interpolation = cv2.INTER_AREA).astype(np.float32)
         img = np.transpose(img, (2, 0, 1))
 
         tensor_img = torch.from_numpy(img).unsqueeze(0)
@@ -79,7 +79,7 @@ def main():
         if args.output_depth:
             depth = 1/output
             depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
-            imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), np.transpose(depth, (1, 2, 0)))
+            imsave(output_dir/'{}_depth{}'.format(file_name, file_ext), np.transpose(depth, (1, 2, 0)))
 
 
 if __name__ == '__main__':
