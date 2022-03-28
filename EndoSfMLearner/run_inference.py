@@ -69,7 +69,6 @@ def main():
         tensor_img = ((tensor_img/255 - 0.45)/0.225).to(device)
 
         output = disp_net(tensor_img)[0]
-        print(output.shape)
         file_path, file_ext = file.relpath(args.dataset_dir).splitext()
         file_name = '-'.join(file_path.splitall())
 
@@ -77,7 +76,7 @@ def main():
             disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
             #disp = np.delete(disp, 3, 2)
             #imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), np.transpose(disp, (1, 2, 0)))
-            print(disp.shape)
+            #print(disp.shape)
             imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), disp)
         if args.output_depth:
             depth = 1/output
