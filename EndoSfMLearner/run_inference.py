@@ -74,10 +74,7 @@ def main():
 
         if args.output_disp:
             disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
-            #disp = np.delete(disp, 3, 2)
-            #imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), np.transpose(disp, (1, 2, 0)))
-            #print(disp.shape)
-            imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), disp)
+            imsave(output_dir/'{}_disp{}'.format(file_name, ".jpg"), np.transpose(disp, (1, 2, 0)))
         if args.output_depth:
             depth = 1/output
             depth = (255*tensor2array(depth, max_value=10, colormap='magma')).astype(np.uint8)
