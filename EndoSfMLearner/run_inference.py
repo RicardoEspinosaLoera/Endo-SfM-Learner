@@ -69,7 +69,10 @@ def main():
         tensor_img = ((tensor_img/255 - 0.45)/0.225).to(device)
 
         output = disp_net(tensor_img)[0]
+        disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
         print(output.shape)
+        print(disp.shape)
+        print(disp)
         file_path, file_ext = file.relpath(args.dataset_dir).splitext()
         file_name = '-'.join(file_path.splitall())
 
