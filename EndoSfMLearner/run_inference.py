@@ -62,32 +62,24 @@ def main():
         h, w, _ = img.shape
         if (not args.no_resize) and (h != args.img_height or w != args.img_width):
             #img = imresize(img, (args.img_height, args.img_width)).astype(np.float32)
-            img = cv2.resize(img, (args.img_width,args.img_height), interpolation = cv2.INTER_AREA).astype(np.float32)
+            img = cv2.resize(img, (args.img_width,args.img_height)).astype(np.float32)
         img = np.transpose(img, (2, 0, 1))
 
         tensor_img = torch.from_numpy(img).unsqueeze(0)
         tensor_img = ((tensor_img/255 - 0.45)/0.225).to(device)
 
         output = disp_net(tensor_img)[0]
-        disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
-        disp = np.transpose(disp, (1, 2, 0))
-        print(disp.shape)
-        print(disp[0].shape)
-        print(disp[0])
-
+        print(output.shape)
         file_path, file_ext = file.relpath(args.dataset_dir).splitext()
         file_name = '-'.join(file_path.splitall())
 
         if args.output_disp:
             disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
-            #imsave(output_dir/'{}_disp{}'.format(file_name, file_ext), np.transpose(disp, (1, 2, 0)))
-            imsave(output_dir/'{}_disp{}'.format(file_name, file_ext), disp)
+            imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), np.transpose(disp, (1, 2, 0)))
         if args.output_depth:
             depth = 1/output
             depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
-            ##imsave(output_dir/'{}_depth{}'.format(file_name, file_ext), np.transpose(depth, (1, 2, 0)))
-            imsave(output_dir/'{}_depth{}'.format(file_name, file_ext), depth)
-            
+            imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), np.transpose(depth, (1, 2, 0)))
 
 
 if __name__ == '__main__':
