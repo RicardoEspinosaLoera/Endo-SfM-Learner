@@ -80,7 +80,7 @@ def main():
             imsave(output_dir/'{}_disp{}'.format(file_name, ".png"), disp)
         if args.output_depth:
             depth = 1/output
-            depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
+            depth = (255*tensor2array(depth, max_value=10, colormap='magma')).astype(np.uint8)
             #depth = np.delete(depth, 3, 2)
             #imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), np.transpose(depth, (1, 2, 0)))
             imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), depth)
