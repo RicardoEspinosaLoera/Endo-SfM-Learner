@@ -78,7 +78,7 @@ def main():
         if args.output_depth:
             depth = 1/output
             depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
-            imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), np.transpose(depth, (1, 2, 0)))
+            imsave(output_dir/'{}_depth{}'.format(file_name, ".jpg"), np.transpose(depth, (1, 2, 0)))
 
 
 
