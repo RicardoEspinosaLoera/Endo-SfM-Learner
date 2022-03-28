@@ -84,11 +84,6 @@ def main():
             depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
             #depth = np.delete(depth, 3, 2)
             #imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), np.transpose(depth, (1, 2, 0)))
-            print(depth.shape)
-            print(depth[0])
-            print(depth[1])
-            print(depth[2])
-            print(depth[3])
             imsave(output_dir/'{}_depth{}'.format(file_name, ".png"), depth)
 
 
