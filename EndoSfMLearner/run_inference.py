@@ -31,7 +31,7 @@ parser.add_argument('--resnet-layers', required=True, type=int, default=18, choi
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 CMAP = 'plasma'
 
-
+print(device)
 def _gray2rgb(im, cmap=CMAP):
   cmap = plt.get_cmap(cmap)
   rgba_img = cmap(im.astype(np.float32))
