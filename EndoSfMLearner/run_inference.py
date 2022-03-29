@@ -49,9 +49,11 @@ def _normalize_depth_for_display(depth,
   if normalizer is not None:
     disp /= normalizer
   else:
-    disp /= (np.percentile(disp, pc).detach().cpu().numpy() + 1e-6)
+    #disp /= (np.percentile(disp, pc).detach().cpu().numpy() + 1e-6)
+    disp /= torch.quantile(disp, pc) + 1e-6
     #num = np.minimum(nonzeros_num.detach().cpu().numpy(), num)
-  disp = np.clip(disp, 0, 1)
+  #disp = np.clip(disp, 0, 1)
+  disp = torch.clip(disp, 0, 1)
   disp = _gray2rgb(disp, cmap=cmap)
   keep_h = int(disp.shape[0] * (1 - crop_percent))
   disp = disp[:keep_h]
