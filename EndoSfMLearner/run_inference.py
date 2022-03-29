@@ -49,7 +49,7 @@ def _normalize_depth_for_display(depth,
   if normalizer is not None:
     disp /= normalizer
   else:
-    disp /= (np.percentile(disp, pc) + 1e-6).cpu().numpy()
+    disp /= (np.percentile(disp, pc) + 1e-6).detach().cpu().numpy()
   disp = np.clip(disp, 0, 1)
   disp = _gray2rgb(disp, cmap=cmap)
   keep_h = int(disp.shape[0] * (1 - crop_percent))
