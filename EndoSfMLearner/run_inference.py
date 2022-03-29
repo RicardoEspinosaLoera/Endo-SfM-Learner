@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 from models import DispResNet
 from utils import tensor2array
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description='Inference script for DispNet learned with \
                                  Structure from Motion Learner inference on KITTI Dataset',
