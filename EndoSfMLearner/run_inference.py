@@ -30,6 +30,30 @@ parser.add_argument('--resnet-layers', required=True, type=int, default=18, choi
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
+def _gray2rgb(im, cmap=CMAP):
+  cmap = plt.get_cmap(cmap)
+  rgba_img = cmap(im.astype(np.float32))
+  rgb_img = np.delete(rgba_img, 3, 2)
+  return rgb_img
+
+
+def _normalize_depth_for_display(depth,
+                                 pc=95,
+                                 crop_percent=0,
+                                 normalizer=None,
+                                 cmap=CMAP):
+  """Converts a depth map to an RGB image."""
+  # Convert to disparity.
+  disp = 1.0 / (depth + 1e-6)
+  if normalizer is not None:
+    disp /= normalizer
+  else:
+    disp /= (np.percentile(disp, pc) + 1e-6)
+  disp = np.clip(disp, 0, 1)
+  disp = _gray2rgb(disp, cmap=cmap)
+  keep_h = int(disp.shape[0] * (1 - crop_percent))
+  disp = disp[:keep_h]
+  return disp
 
 @torch.no_grad()
 def main():
@@ -73,12 +97,14 @@ def main():
         file_name = '-'.join(file_path.splitall())
 
         if args.output_disp:
-            disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
-            imsave(output_dir/'{}_disp{}'.format(file_name, ".jpg"), np.transpose(disp, (1, 2, 0)))
+            #disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
+            disp = _normalize_depth_for_display(output, cmap=CMAP)
+            imsave(output_dir/'{}_disp{}'.format(file_name, ".jpg"), disp)
         if args.output_depth:
             depth = 1/output
-            depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
-            imsave(output_dir/'{}_depth{}'.format(file_name, ".jpg"), np.transpose(depth, (1, 2, 0)))
+            #depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
+            depth = _normalize_depth_for_display(output, cmap=CMAP)
+            imsave(output_dir/'{}_depth{}'.format(file_name, ".jpg"),depth)
 
 
 
