@@ -101,7 +101,7 @@ def main():
         file_path, file_ext = file.relpath(args.dataset_dir).splitext()
         file_name = '-'.join(file_path.splitall())
 
-       if args.output_disp:
+        if args.output_disp:
             disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
             imsave(output_dir/'{}_disp{}'.format(file_name, file_ext), np.transpose(disp, (1,2,0)))
         if args.output_depth:
