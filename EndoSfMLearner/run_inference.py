@@ -49,7 +49,7 @@ def _normalize_depth_for_display(depth,
   if normalizer is not None:
     disp /= normalizer
   else:
-    disp /= (np.percentile(disp, pc) + 1e-6)
+    disp /= (np.percentile(disp, pc).cpu().numpy() + 1e-6)
   disp = np.clip(disp, 0, 1)
   disp = _gray2rgb(disp, cmap=cmap)
   keep_h = int(disp.shape[0] * (1 - crop_percent))
@@ -99,12 +99,12 @@ def main():
 
         if args.output_disp:
             #disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
-            disp = _normalize_depth_for_display(output, cmap=CMAP).to(device)
+            disp = _normalize_depth_for_display(output, cmap=CMAP)
             imsave(output_dir/'{}_disp{}'.format(file_name, ".jpg"), disp)
         if args.output_depth:
             depth = 1/output
             #depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
-            depth = _normalize_depth_for_display(output, cmap=CMAP).to(device)
+            depth = _normalize_depth_for_display(output, cmap=CMAP)
             imsave(output_dir/'{}_depth{}'.format(file_name, ".jpg"),depth)
 
 
