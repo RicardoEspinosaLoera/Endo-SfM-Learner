@@ -29,6 +29,7 @@ parser.add_argument('--resnet-layers', required=True, type=int, default=18, choi
                     help='depth network architecture.')
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+CMAP = 'plasma'
 
 def _gray2rgb(im, cmap=CMAP):
   cmap = plt.get_cmap(cmap)
