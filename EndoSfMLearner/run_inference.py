@@ -31,14 +31,13 @@ parser.add_argument('--resnet-layers', required=True, type=int, default=18, choi
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 CMAP = 'plasma'
 
-@torch.no_grad()
+
 def _gray2rgb(im, cmap=CMAP):
   cmap = plt.get_cmap(cmap)
   rgba_img = cmap(im.astype(np.float32))
   rgb_img = np.delete(rgba_img, 3, 2)
   return rgb_img
 
-@torch.no_grad()
 def _normalize_depth_for_display(depth,
                                  pc=95,
                                  crop_percent=0,
@@ -100,12 +99,12 @@ def main():
 
         if args.output_disp:
             #disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
-            disp = _normalize_depth_for_display(output, cmap=CMAP)
+            disp = _normalize_depth_for_display(output, cmap=CMAP).to(device)
             imsave(output_dir/'{}_disp{}'.format(file_name, ".jpg"), disp)
         if args.output_depth:
             depth = 1/output
             #depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
-            depth = _normalize_depth_for_display(output, cmap=CMAP)
+            depth = _normalize_depth_for_display(output, cmap=CMAP).to(device)
             imsave(output_dir/'{}_depth{}'.format(file_name, ".jpg"),depth)
 
 
