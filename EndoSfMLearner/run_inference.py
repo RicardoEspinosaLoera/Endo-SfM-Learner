@@ -94,7 +94,8 @@ def main():
             #depth = disp_to_depth(output)
             #_, depth = disp_to_depth(output, MIN_DEPTH, MAX_DEPTH)
             #print(depth.shape)
-            depth = (255*tensor2array(output, max_value=1, colormap='rainbow')).astype(np.uint8)
+            depth = 1/output
+            depth = (255*tensor2array(output, max_value=None, colormap='rainbow')).astype(np.uint8)
             #print(depth.shape)
             imsave(output_dir/'{}_depth{}'.format(file_name, file_ext), np.transpose(depth, (1,2,0)))
 
