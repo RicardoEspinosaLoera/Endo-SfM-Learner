@@ -100,12 +100,12 @@ def main():
 
         if args.output_disp:
             #disp = (255*tensor2array(output, max_value=None, colormap='bone')).astype(np.uint8)
-            disp = _normalize_depth_for_display(output, cmap=CMAP)
+            disp = _normalize_depth_for_display(output, cmap=CMAP,normalizer= True)
             imsave(output_dir/'{}_disp{}'.format(file_name, ".jpg"), disp)
         if args.output_depth:
             depth = 1/output
             #depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
-            depth = _normalize_depth_for_display(output, cmap=CMAP)
+            depth = _normalize_depth_for_display(output, cmap=CMAP,normalizer= True)
             imsave(output_dir/'{}_depth{}'.format(file_name, ".jpg"),depth)
 
 
