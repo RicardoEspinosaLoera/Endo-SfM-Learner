@@ -110,7 +110,7 @@ def main():
             #depth = (255*tensor2array(depth, max_value=10, colormap='rainbow')).astype(np.uint8)
             depth = _normalize_depth_for_display(output, cmap=CMAP,normalizer= True)
             print(depth.shape)
-            imsave(output_dir/'{}_depth{}'.format(file_name, ".jpg"),depth)
+            imsave(output_dir/'{}_depth{}'.format(file_name, ".pdf"),depth[0])
 
 
 
