@@ -35,7 +35,7 @@ CMAP = 'plasma'
 print(device)
 def _gray2rgb(im, cmap=CMAP):
   cmap = plt.get_cmap(cmap)
-  rgba_img = cmap(tf.cast(im, tf.float32))
+  rgba_img = cmap(im.type(torch.DoubleTensor))
   rgb_img = np.delete(rgba_img, 3, 2)
   return rgb_img
 
