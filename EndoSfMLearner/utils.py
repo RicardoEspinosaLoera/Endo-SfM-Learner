@@ -63,7 +63,8 @@ def opencv_rainbow(resolution=1000):
 
 COLORMAPS = {'rainbow': opencv_rainbow(),
              'magma': high_res_colormap(cm.get_cmap('magma')),
-             'bone': cm.get_cmap('bone', 10000)}
+             'bone': cm.get_cmap('bone', 10000),
+             'plasma': cm.get_cmap('plasma')}
 
 
 def log_output_tensorboard(writer, prefix, index, suffix, n_iter, depth, disp, warped, diff, mask):
