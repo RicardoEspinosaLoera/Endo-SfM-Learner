@@ -45,7 +45,7 @@ class SequenceFolder(data.Dataset):
                     [0, 1.02, 0.5],
                     [0, 0, 1]], dtype=np.float32)
             #print(intrinsics)
-
+            print(scene)
             imgs = sorted(scene.files('*.jpg'))
 
             if len(imgs) < sequence_length:
