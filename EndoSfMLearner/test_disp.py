@@ -36,20 +36,19 @@ def load_tensor_image(filename, args):
     img = np.transpose(img, (2, 0, 1))
     tensor_img = ((torch.from_numpy(img).unsqueeze(0)/255-0.45)/0.225).to(device)
     return tensor_img
-
+"""
 def _gray2rgb(im, cmap=CMAP):
   cmap = plt.get_cmap(cmap)
   rgba_img = cmap(im.astype(np.float32))
   rgb_img = np.delete(rgba_img, 3, 2)
-  return rgb_img
+  return rgb_img"""
 
-
+"""
 def _normalize_depth_for_display(depth,
                                  pc=95,
                                  crop_percent=0,
                                  normalizer=None,
                                  cmap=CMAP):
-  """Converts a depth map to an RGB image."""
   # Convert to disparity.
   disp = 1.0 / (depth + 1e-6)
   if normalizer is not None:
@@ -60,7 +59,7 @@ def _normalize_depth_for_display(depth,
   disp = _gray2rgb(disp, cmap=cmap)
   keep_h = int(disp.shape[0] * (1 - crop_percent))
   disp = disp[:keep_h]
-  return disp
+  return disp"""
 
 @torch.no_grad()
 def main():
