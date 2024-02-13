@@ -138,7 +138,7 @@ def main():
         #print(colored_map.shape)
         disp = colormap(pred_disp)
         disp = (disp * 255).astype(np.uint8)
-        print(disp)
+        #print(disp)
         im = Image.fromarray(disp.transpose(1, 2, 0))
         imageio.imsave(output_dir/str(j)+'.jpg', im)
 
