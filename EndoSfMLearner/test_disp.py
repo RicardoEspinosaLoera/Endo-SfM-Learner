@@ -137,7 +137,8 @@ def main():
         #print(colored_map.shape)
         disp = colormap(pred_disp)
         #print(disp.shape)
-        imageio.imsave(output_dir/str(j)+'.jpg', disp.transpose(1, 2, 0))
+        im = Image.fromarray((disp * 255).astype(np.uint8))
+        imageio.imsave(output_dir/str(j)+'.jpg', im.transpose(1, 2, 0))
 
         if j == 0:
             predictions = np.zeros((len(test_files), *pred_disp.shape))
