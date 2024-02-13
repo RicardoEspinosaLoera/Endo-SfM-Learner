@@ -137,9 +137,10 @@ def main():
         #colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP,normalizer=True)
         #print(colored_map.shape)
         disp = colormap(pred_disp)
+        disp = (disp * 255).astype(np.uint8)
         print(disp)
-        im = Image.fromarray((disp * 255).astype(np.uint8))
-        imageio.imsave(output_dir/str(j)+'.jpg', im.transpose(1, 2, 0))
+        im = Image.fromarray(disp.transpose(1, 2, 0))
+        imageio.imsave(output_dir/str(j)+'.jpg', im)
 
         if j == 0:
             predictions = np.zeros((len(test_files), *pred_disp.shape))
