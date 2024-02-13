@@ -101,9 +101,10 @@ def main():
         avg_time += elapsed_time
 
         pred_disp = output.cpu().numpy()[0,0]
-        print(pred_disp.shape)
+        #print(pred_disp.shape)
         depth_map = np.squeeze(pred_disp)
         colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP,normalizer=True)
+        print(colored_map.shape)
         imageio.imsave(output_dir/str(j)+'.jpg', colored_map)
 
         if j == 0:
