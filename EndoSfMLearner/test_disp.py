@@ -31,8 +31,9 @@ _DEPTH_COLORMAP = plt.get_cmap('plasma', 256)  # for plotting
 
 def load_tensor_image(filename, args):
     #img = imread(filename).astype(np.float32)
-    img = Image.open(filename).astype(np.float32)
+    img = Image.open(filename)
     h,w,_ = img.shape
+    print("Heeeere",h,w)
     if (h != args.img_height or w != args.img_width):
         img = imresize(img, (args.img_height, args.img_width)).astype(np.float32)
     img = np.transpose(img, (2, 0, 1))
