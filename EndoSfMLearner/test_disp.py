@@ -136,6 +136,7 @@ def main():
         #colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP,normalizer=True)
         #print(colored_map.shape)
         disp = colormap(pred_disp)
+        print(disp.shape)
         imageio.imsave(output_dir/str(j)+'.jpg', disp)
 
         if j == 0:
