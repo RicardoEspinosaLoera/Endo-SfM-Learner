@@ -34,7 +34,7 @@ def load_tensor_image(filename, args):
     img = Image.open(filename)
     img = np.array(img).astype(np.float32)
     h,w,_ = img.shape
-    print("Heeeere",h,w)
+    #print("Heeeere",h,w)
     if (h != args.img_height or w != args.img_width):
         img = imresize(img, (args.img_height, args.img_width)).astype(np.float32)
     img = np.transpose(img, (2, 0, 1))
@@ -136,7 +136,7 @@ def main():
 
         pred_disp = output.cpu().numpy()[0,0]
         
-        #print(pred_disp.shape)
+        print(pred_disp.shape)
         #depth_map = np.squeeze(pred_disp)
         #colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP,normalizer=True)
         #print(colored_map.shape)
