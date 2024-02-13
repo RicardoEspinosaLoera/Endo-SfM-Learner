@@ -30,7 +30,8 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 _DEPTH_COLORMAP = plt.get_cmap('plasma', 256)  # for plotting
 
 def load_tensor_image(filename, args):
-    img = imread(filename).astype(np.float32)
+    #img = imread(filename).astype(np.float32)
+    img = Image.open(filename).astype(np.float32)
     h,w,_ = img.shape
     if (h != args.img_height or w != args.img_width):
         img = imresize(img, (args.img_height, args.img_width)).astype(np.float32)
@@ -132,10 +133,12 @@ def main():
         avg_time += elapsed_time
 
         pred_disp = output.cpu().numpy()[0,0]
+        
         #print(pred_disp.shape)
         #depth_map = np.squeeze(pred_disp)
         #colored_map = _normalize_depth_for_display(depth_map, cmap=CMAP,normalizer=True)
         #print(colored_map.shape)
+        
         disp = colormap(pred_disp)
         disp = (disp * 255).astype(np.uint8)
         #print(disp)
