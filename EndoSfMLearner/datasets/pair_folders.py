@@ -34,7 +34,9 @@ class PairFolder(data.Dataset):
         pair_set = []
         for scene in self.scenes:
             # intrinsics = np.genfromtxt(scene/'cam.txt').astype(np.float32).reshape((3, 3))
-            
+            intrinsics = np.array([[0.82, 0, 0.5],
+                    [0, 1.02, 0.5],
+                    [0, 0, 1]], dtype=np.float32)
             imgs = sorted(scene.files('*.jpg'))
             intrinsics = sorted(scene.files('*.txt'))
 
