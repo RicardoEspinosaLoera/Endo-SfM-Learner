@@ -41,7 +41,7 @@ class PairFolder(data.Dataset):
             intrinsics = sorted(scene.files('*.txt'))
 
             for i in range(0, len(imgs)-1, 2):
-                intrinsic = np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
+                #intrinsic = np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
                 sample = {'intrinsics': intrinsic, 'tgt': imgs[i], 'ref_imgs': [imgs[i+1]]}
                 pair_set.append(sample)
         random.shuffle(pair_set)
