@@ -359,7 +359,7 @@ def validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger):
         """output_writers[i].add_image('val Depth Output',
                                     tensor2array(tgt_depth[0][0], max_value=10),
                                     epoch)"""
-        wandb.log({'val Depth Output': wandb.Image(tensor2array(tgt_depth[0][0], max_value=10).transpose(1, 2, 0)},step=epoch)                                
+        wandb.log({'val Depth Output': wandb.Image(tensor2array(tgt_depth[0][0], max_value=10).transpose(1, 2, 0))},step=epoch)                               
 
         poses, poses_inv = compute_pose_with_inv(pose_net, tgt_img, ref_imgs)
 
