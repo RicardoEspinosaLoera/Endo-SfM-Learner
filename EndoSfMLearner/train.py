@@ -200,7 +200,9 @@ def main():
 
         # train for one epoch
         logger.reset_train_bar()
+        
         train_loss = train(args, train_loader, disp_net, pose_net, optimizer, args.epoch_size, logger)
+        errors, error_names = validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger)
         #logger.train_writer.write(' * Avg Loss : {:.3f}'.format(train_loss))
 
         # evaluate on validation set
