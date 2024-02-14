@@ -352,7 +352,7 @@ def validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger):
         #if log_outputs and i < len(output_writers):
         if epoch == 0:
             #output_writers[i].add_image('val Input', tensor2array(tgt_img[0]), 0)
-            wandb.log({'val Input': wandb.Image(tensor2array(tgt_img[0]).transpose(1, 2, 0))},step=0)
+            wandb.log({'val Input': wandb.Image(tensor2array(tgt_img[0]).transpose(1, 2, 0))},step=epoch)
         """output_writers[i].add_image('val Dispnet Output Normalized',
                                     tensor2array(1/tgt_depth[0][0], max_value=None, colormap='magma'),
                                     epoch)"""
