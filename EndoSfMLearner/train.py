@@ -23,7 +23,7 @@ from logger import TermLogger, AverageMeter
 import wandb
 
 
-wandb.init(project="AF-SfMLearner", entity="respinosa")
+wandb.init(project="EndoSfMLearner", entity="respinosa")
 
 
 parser = argparse.ArgumentParser(description='Structure from Motion Learner training on KITTI and CityScapes Dataset',
@@ -201,7 +201,7 @@ def main():
         # train for one epoch
         logger.reset_train_bar()
         train_loss = train(args, train_loader, disp_net, pose_net, optimizer, args.epoch_size, logger)
-        logger.train_writer.write(' * Avg Loss : {:.3f}'.format(train_loss))
+        #logger.train_writer.write(' * Avg Loss : {:.3f}'.format(train_loss))
 
         # evaluate on validation set
         logger.reset_valid_bar()
@@ -216,7 +216,7 @@ def main():
         for error, name in zip(errors, error_names):
             training_writer.add_scalar(name, error, epoch)"""
 
-        wandb.log({"{}_{}".format(name,error):v},step=epoch)        
+        wandb.log({"{}".format(name):error},step=epoch)        
 
         # Up to you to chose the most relevant error to measure your model's performance, careful some measures are to maximize (such as a1,a2,a3)
         decisive_error = errors[1]
@@ -285,10 +285,14 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
         loss = w1*loss_1 + w2*loss_2 + w3*loss_3
 
         if log_losses:
-            train_writer.add_scalar('photometric_error', loss_1.item(), n_iter)
+            wandb.log({'photometric_error':loss_1.item()},step=n_iter)  
+            wandb.log({'disparity_smoothness_loss':loss_2.item()},step=n_iter)  
+            wandb.log({'geometry_consistency_loss':loss_3.item()},step=n_iter)  
+            wandb.log({'total_loss':loss.item()},step=n_iter)  
+            """train_writer.add_scalar('photometric_error', loss_1.item(), n_iter)
             train_writer.add_scalar('disparity_smoothness_loss', loss_2.item(), n_iter)
             train_writer.add_scalar('geometry_consistency_loss', loss_3.item(), n_iter)
-            train_writer.add_scalar('total_loss', loss.item(), n_iter)
+            train_writer.add_scalar('total_loss', loss.item(), n_iter)"""
 
         # record loss and EPE
         losses.update(loss.item(), args.batch_size)
@@ -306,8 +310,9 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
             writer = csv.writer(csvfile, delimiter='\t')
             writer.writerow([loss.item(), loss_1.item(), loss_2.item(), loss_3.item()])
         logger.train_bar.update(i+1)
-        if i % args.print_freq == 0:
-            logger.train_writer.write('Train: Time {} Data {} Loss {}'.format(batch_time, data_time, losses))
+        """if i % args.print_freq == 0:
+            logger.train_writer.write('Train: Time {} Data {} Loss {}'.format(batch_time, data_time, losses))"""
+            
         if i >= epoch_size - 1:
             break
 
