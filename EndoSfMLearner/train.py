@@ -18,7 +18,12 @@ from datasets.sequence_folders import SequenceFolder
 from datasets.pair_folders import PairFolder
 from loss_functions import compute_smooth_loss, compute_photo_and_geometry_loss, compute_errors
 from logger import TermLogger, AverageMeter
-from tensorboardX import SummaryWriter
+#from tensorboardX import SummaryWriter
+
+import wandb
+
+
+wandb.init(project="AF-SfMLearner", entity="respinosa")
 
 
 parser = argparse.ArgumentParser(description='Structure from Motion Learner training on KITTI and CityScapes Dataset',
@@ -83,11 +88,12 @@ def main():
     cudnn.deterministic = True
     cudnn.benchmark = True
 
+    """
     training_writer = SummaryWriter(args.save_path)
     output_writers = []
     if args.log_output:
         for i in range(3):
-            output_writers.append(SummaryWriter(args.save_path/'valid'/str(i)))
+            output_writers.append(SummaryWriter(args.save_path/'valid'/str(i)))"""
 
     # Data loading code
     normalize = custom_transforms.Normalize(mean=[0.45, 0.45, 0.45],
@@ -194,7 +200,7 @@ def main():
 
         # train for one epoch
         logger.reset_train_bar()
-        train_loss = train(args, train_loader, disp_net, pose_net, optimizer, args.epoch_size, logger, training_writer)
+        train_loss = train(args, train_loader, disp_net, pose_net, optimizer, args.epoch_size, logger)
         logger.train_writer.write(' * Avg Loss : {:.3f}'.format(train_loss))
 
         # evaluate on validation set
@@ -206,8 +212,11 @@ def main():
         error_string = ', '.join('{} : {:.3f}'.format(name, error) for name, error in zip(error_names, errors))
         logger.valid_writer.write(' * Avg {}'.format(error_string))
 
+        """
         for error, name in zip(errors, error_names):
-            training_writer.add_scalar(name, error, epoch)
+            training_writer.add_scalar(name, error, epoch)"""
+
+        wandb.log({"{}_{}".format(name,error):v},step=epoch)        
 
         # Up to you to chose the most relevant error to measure your model's performance, careful some measures are to maximize (such as a1,a2,a3)
         decisive_error = errors[1]
@@ -233,7 +242,7 @@ def main():
     logger.epoch_bar.finish()
 
 
-def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger, train_writer):
+def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger):
     global n_iter, device
     batch_time = AverageMeter()
     data_time = AverageMeter()
