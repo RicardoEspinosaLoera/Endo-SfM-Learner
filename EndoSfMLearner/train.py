@@ -213,11 +213,12 @@ def main():
         error_string = ', '.join('{} : {:.3f}'.format(name, error) for name, error in zip(error_names, errors))
         logger.valid_writer.write(' * Avg {}'.format(error_string))
 
-        """
+        
         for error, name in zip(errors, error_names):
-            training_writer.add_scalar(name, error, epoch)"""
+            #training_writer.add_scalar(name, error, epoch)
+            wandb.log({"{}".format(name):error},step=epoch)  
 
-        wandb.log({"{}".format(name):error},step=epoch)        
+              
 
         # Up to you to chose the most relevant error to measure your model's performance, careful some measures are to maximize (such as a1,a2,a3)
         decisive_error = errors[1]
