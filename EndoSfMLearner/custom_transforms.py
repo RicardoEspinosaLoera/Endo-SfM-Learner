@@ -69,7 +69,7 @@ class RandomScaleCrop(object):
         in_h, in_w, _ = images[0].shape
         x_scaling, y_scaling = np.random.uniform(1, 1.15, 2)
         scaled_h, scaled_w = int(in_h * y_scaling), int(in_w * x_scaling)
-        print(output_intrinsics.shape)
+        print(intrinsics.shape)
         output_intrinsics[0] *= x_scaling
         output_intrinsics[1] *= y_scaling
         scaled_images = [np.array(Image.fromarray(im.astype(np.uint8)).resize((scaled_w, scaled_h))).astype(np.float32) for im in images]
