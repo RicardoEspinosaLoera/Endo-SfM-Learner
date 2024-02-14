@@ -38,7 +38,7 @@ class PairFolder(data.Dataset):
                     [0, 1.02, 0.5],
                     [0, 0, 1]], dtype=np.float32)
             imgs = sorted(scene.files('*.jpg'))
-            intrinsics = sorted(scene.files('*.txt'))
+            #intrinsics = sorted(scene.files('*.txt'))
 
             for i in range(0, len(imgs)-1, 2):
                 intrinsic = intrinsics #np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
