@@ -74,8 +74,8 @@ if __name__ == "__main__":
     model = PoseResNet().cuda()
     model.train()
 
-    tgt_img = torch.randn(4, 3, 256, 832).cuda()
-    ref_imgs = [torch.randn(4, 3, 256, 832).cuda() for i in range(2)]
+    tgt_img = torch.randn(4, 3, 256, 320).cuda()
+    ref_imgs = [torch.randn(4, 3, 256, 320).cuda() for i in range(2)]
 
     pose = model(tgt_img, ref_imgs[0])
 

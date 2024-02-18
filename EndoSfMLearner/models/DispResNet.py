@@ -130,8 +130,8 @@ if __name__ == "__main__":
 
     B = 12
 
-    tgt_img = torch.randn(B, 3, 256, 832).cuda()
-    ref_imgs = [torch.randn(B, 3, 256, 832).cuda() for i in range(2)]
+    tgt_img = torch.randn(B, 3, 256, 320).cuda()
+    ref_imgs = [torch.randn(B, 3, 256, 320).cuda() for i in range(2)]
 
     tgt_depth = model(tgt_img)
 
