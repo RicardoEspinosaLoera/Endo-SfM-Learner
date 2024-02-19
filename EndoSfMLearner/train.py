@@ -206,10 +206,10 @@ def main():
 
         # evaluate on validation set
         logger.reset_valid_bar()
-        if args.with_gt:
+        """if args.with_gt:
             errors, error_names = validate_with_gt(args, val_loader, disp_net, epoch, logger, output_writers)
-        else:
-            errors, error_names = validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger)
+        else:"""
+        errors, error_names = validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger)
         error_string = ', '.join('{} : {:.3f}'.format(name, error) for name, error in zip(error_names, errors))
         logger.valid_writer.write(' * Avg {}'.format(error_string))
 
@@ -352,15 +352,15 @@ def validate_without_gt(args, val_loader, disp_net, pose_net, epoch, logger):
         #if log_outputs and i < len(output_writers):
         if epoch == 0:
             #output_writers[i].add_image('val Input', tensor2array(tgt_img[0]), 0)
-            wandb.log({'val Input': wandb.Image(tensor2array(tgt_img[0]).transpose(1, 2, 0))},step=epoch+1)
+            wandb.log({'val Input': wandb.Image(tensor2array(tgt_img[0]).transpose(1, 2, 0))},step=epoch)
         """output_writers[i].add_image('val Dispnet Output Normalized',
                                     tensor2array(1/tgt_depth[0][0], max_value=None, colormap='magma'),
                                     epoch)"""
-        wandb.log({'val Dispnet Output Normalized': wandb.Image(tensor2array(1/tgt_depth[0][0], max_value=None, colormap='magma').transpose(1, 2, 0))},step=epoch+1)
+        wandb.log({'val Dispnet Output Normalized': wandb.Image(tensor2array(1/tgt_depth[0][0], max_value=None, colormap='magma').transpose(1, 2, 0))},step=epoch)
         """output_writers[i].add_image('val Depth Output',
                                     tensor2array(tgt_depth[0][0], max_value=10),
                                     epoch)"""
-        wandb.log({'val Depth Output': wandb.Image(tensor2array(tgt_depth[0][0], max_value=10).transpose(1, 2, 0))},step=epoch+1)                               
+        wandb.log({'val Depth Output': wandb.Image(tensor2array(tgt_depth[0][0], max_value=10).transpose(1, 2, 0))},step=epoch)                               
 
         poses, poses_inv = compute_pose_with_inv(pose_net, tgt_img, ref_imgs)
 
