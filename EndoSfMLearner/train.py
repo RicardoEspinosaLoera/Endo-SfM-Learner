@@ -121,6 +121,8 @@ def main():
     dataset = SCAREDDataset
     fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
     fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
+    print(fpath_train)
+    print(fpath_val)
     train_filenames = readlines(fpath_train)
     val_filenames = readlines(fpath_val)
     train_set = dataset(
