@@ -126,10 +126,10 @@ def main():
     val_filenames = readlines(fpath_val)
     train_set = dataset(
             args.data, train_filenames, 256, 320,
-            [-1, 0],4, is_train=True, img_ext=".jpg")  
+            [0,1],4, is_train=True, img_ext=".jpg")  
     val_set = dataset(
             args.data, val_filenames, 256, 320,
-            [-1, 0], 4, is_train=False, img_ext=".jpg")
+            [0,1], 4, is_train=False, img_ext=".jpg")
 
     """if args.folder_type == 'sequence':
         train_set = SequenceFolder(
