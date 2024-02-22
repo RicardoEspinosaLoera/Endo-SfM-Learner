@@ -166,7 +166,6 @@ class MonoDataset(data.Dataset):
         inputs[("color_aug", i, -1)]
         tgt_img = inputs[("color_aug", 0, -1)]
         ref_imgs = inputs[("color_aug", 1, -1)]
-        intrinsics = np.copy(sample['intrinsics'])
         return tgt_img, ref_imgs, intrinsics, np.linalg.inv(intrinsics)
 
     def get_color(self, folder, frame_index, side, do_flip):
