@@ -16,6 +16,7 @@ import custom_transforms
 from utils import tensor2array, save_checkpoint
 from datasets.sequence_folders import SequenceFolder
 from datasets.pair_folders import PairFolder
+import datasets
 from loss_functions import compute_smooth_loss, compute_photo_and_geometry_loss, compute_errors
 from logger import TermLogger, AverageMeter
 #from tensorboardX import SummaryWriter
@@ -96,6 +97,7 @@ def main():
             output_writers.append(SummaryWriter(args.save_path/'valid'/str(i)))"""
 
     # Data loading code
+    """
     normalize = custom_transforms.Normalize(mean=[0.45, 0.45, 0.45],
                                             std=[0.225, 0.225, 0.225])
 
@@ -106,9 +108,29 @@ def main():
     ])
 
     valid_transform = custom_transforms.Compose([custom_transforms.ArrayToTensor()])
+    """
 
     print("=> fetching scenes in '{}'".format(args.data))
-    if args.folder_type == 'sequence':
+    
+    """
+    datasets_dict = {"kitti": datasets.KITTIRAWDataset,
+                         "cityscapes_preprocessed": datasets.CityscapesPreprocessedDataset,
+                         "kitti_odom": datasets.KITTIOdomDataset,
+                         "endovis": datasets.SCAREDDataset}"""
+
+    dataset = datasets.SCAREDDataset
+    fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
+    fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
+    train_filenames = readlines(fpath_train)
+    val_filenames = readlines(fpath_val)
+    train_set = dataset(
+            args.data, train_filenames, 256, 320,
+            [0, -1],4, is_train=True, img_ext="jpg")  
+    val_set = self.dataset(
+            args.data, val_filenames, 256, 320,
+            [0, -1], 4, is_train=False, img_ext="jpg")
+
+    """if args.folder_type == 'sequence':
         train_set = SequenceFolder(
             args.data,
             transform=train_transform,
@@ -123,10 +145,13 @@ def main():
             seed=args.seed,
             train=True,
             transform=train_transform
-        )
+        )"""
+    
+
 
 
     # if no Groundtruth is avalaible, Validation set is the same type as training set to measure photometric loss from warping
+    """
     if args.with_gt:
         from datasets.validation_folders import ValidationSet
         val_set = ValidationSet(
@@ -143,6 +168,7 @@ def main():
             sequence_length=args.sequence_length,
             dataset=args.dataset
         )
+    """
     print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
     print('{} samples found in {} valid scenes'.format(len(val_set), len(val_set.scenes)))
     train_loader = torch.utils.data.DataLoader(
@@ -286,10 +312,10 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
         loss = w1*loss_1 + w2*loss_2 + w3*loss_3
 
         if log_losses:
-            wandb.log({'photometric_error':loss_1.item()},step=n_iter)  
-            wandb.log({'disparity_smoothness_loss':loss_2.item()},step=n_iter)  
-            wandb.log({'geometry_consistency_loss':loss_3.item()},step=n_iter)  
-            wandb.log({'total_loss':loss.item()},step=n_iter)  
+            #wandb.log({'photometric_error':loss_1.item()},step=n_iter)  
+            #wandb.log({'disparity_smoothness_loss':loss_2.item()},step=n_iter)  
+            #wandb.log({'geometry_consistency_loss':loss_3.item()},step=n_iter)  
+            #wandb.log({'total_loss':loss.item()},step=n_iter)  
             """train_writer.add_scalar('photometric_error', loss_1.item(), n_iter)
             train_writer.add_scalar('disparity_smoothness_loss', loss_2.item(), n_iter)
             train_writer.add_scalar('geometry_consistency_loss', loss_3.item(), n_iter)
