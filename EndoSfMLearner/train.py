@@ -16,7 +16,7 @@ import custom_transforms
 from utils import tensor2array, save_checkpoint
 from datasets.sequence_folders import SequenceFolder
 from datasets.pair_folders import PairFolder
-import datasets
+from datasets.scared_dataset import SCAREDDataset
 from loss_functions import compute_smooth_loss, compute_photo_and_geometry_loss, compute_errors
 from logger import TermLogger, AverageMeter
 #from tensorboardX import SummaryWriter
@@ -118,7 +118,7 @@ def main():
                          "kitti_odom": datasets.KITTIOdomDataset,
                          "endovis": datasets.SCAREDDataset}"""
 
-    dataset = datasets.SCAREDDataset
+    dataset = SCAREDDataset
     fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
     fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
     train_filenames = readlines(fpath_train)
