@@ -494,6 +494,12 @@ def compute_pose_with_inv(pose_net, tgt_img, ref_imgs):
 
     return poses, poses_inv
 
+def readlines(filename):
+    """Read all the lines in a text file and return as a list
+    """
+    with open(filename, 'r') as f:
+        lines = f.read().splitlines()
+    return lines
 
 if __name__ == '__main__':
     main()
