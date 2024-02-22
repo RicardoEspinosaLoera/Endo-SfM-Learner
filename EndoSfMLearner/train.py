@@ -128,7 +128,7 @@ def main():
     train_set = dataset(
             args.data, train_filenames, 256, 320,
             [0, -1],4, is_train=True, img_ext="jpg")  
-    val_set = self.dataset(
+    val_set = dataset(
             args.data, val_filenames, 256, 320,
             [0, -1], 4, is_train=False, img_ext="jpg")
 
