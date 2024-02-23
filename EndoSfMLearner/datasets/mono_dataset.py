@@ -163,9 +163,10 @@ class MonoDataset(data.Dataset):
         self.preprocess(inputs, color_aug)
 
         intrinsics = self.load_intrinsics(folder, frame_index)
-        inputs[("color_aug", i, -1)]
+        #inputs[("color_aug", i, -1)]
         tgt_img = inputs[("color_aug", 0, -1)]
         ref_imgs = inputs[("color_aug", 1, -1)]
+        print("Heeere",tgt_img.shape,ref_imgs.shape,intrinsics.shape)
         return tgt_img, ref_imgs, intrinsics, np.linalg.inv(intrinsics)
 
     def get_color(self, folder, frame_index, side, do_flip):
