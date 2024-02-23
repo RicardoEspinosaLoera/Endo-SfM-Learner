@@ -75,11 +75,6 @@ class MonoDataset(data.Dataset):
             self.saturation = 0.2
             self.hue = 0.1
 
-        self.resize = {}
-        for i in range(self.num_scales):
-            s = 2 ** i
-            self.resize[i] = transforms.Resize((self.height // s, self.width // s),
-                                               interpolation=self.interp)
 
         self.load_depth = self.check_depth()
 
@@ -165,6 +160,9 @@ class MonoDataset(data.Dataset):
 
         intrinsics = self.load_intrinsics(folder, frame_index)
         #inputs[("color_aug", i, -1)]
+        print("Here",inputs[("color_aug", 0, -1)].shape)
+        print("Here",inputs[("color_aug", 1, -1)].shape)
+        
         tgt_img = inputs[("color_aug", 0, -1)]
         ref_imgs = inputs[("color_aug", 1, -1)]
         
