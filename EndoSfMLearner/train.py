@@ -292,7 +292,7 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
         tgt_img = tgt_img.to(device)
         ref_imgs = [img.to(device) for img in ref_imgs]
         intrinsics = intrinsics.to(device)
-        print("Heeere",tgt_img.shape,ref_imgs.shape,intrinsics.shape)
+        #print("Heeere",tgt_img.shape,ref_imgs.shape,intrinsics.shape)
         # compute output
         tgt_depth, ref_depths = compute_depth(disp_net, tgt_img, ref_imgs)
         #print("number fo reference images",len(ref_imgs))
