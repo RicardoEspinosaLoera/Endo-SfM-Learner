@@ -165,8 +165,8 @@ class MonoDataset(data.Dataset):
 
         intrinsics = self.load_intrinsics(folder, frame_index)
         #inputs[("color_aug", i, -1)]
-        tgt_img = torch.as_tensor(inputs[("color_aug", 0, -1)])
-        ref_imgs =  torch.as_tensor(inputs[("color_aug", 1, -1)])
+        tgt_img = inputs[("color_aug", 0, -1)]
+        ref_imgs = inputs[("color_aug", 1, -1)]
         
         return tgt_img, ref_imgs, intrinsics, np.linalg.inv(intrinsics)
 
