@@ -15,7 +15,7 @@ class SCAREDDataset(MonoDataset):
         #SCARED Dataset
         self.K = np.array([[262.4, 0, 160],
                            [0, 261.12, 128],
-                           [0, 0, 1, 0]], dtype=np.float32)
+                           [0, 0, 1]], dtype=np.float32)
 
                        
         #256 / 320
