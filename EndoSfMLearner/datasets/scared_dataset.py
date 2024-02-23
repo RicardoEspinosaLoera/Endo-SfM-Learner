@@ -13,10 +13,9 @@ class SCAREDDataset(MonoDataset):
     def __init__(self, *args, **kwargs):
         super(SCAREDDataset, self).__init__(*args, **kwargs)
         #SCARED Dataset
-        self.K = np.array([[262.4, 0, 160, 0],
-                           [0, 261.12, 128, 0],
-                           [0, 0, 1, 0],
-                           [0, 0, 0, 1]], dtype=np.float32)
+        self.K = np.array([[262.4, 0, 160],
+                           [0, 261.12, 128],
+                           [0, 0, 1, 0]], dtype=np.float32)
 
                        
         #256 / 320

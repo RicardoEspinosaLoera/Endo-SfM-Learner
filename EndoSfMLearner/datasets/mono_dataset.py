@@ -90,11 +90,12 @@ class MonoDataset(data.Dataset):
         images in this item. This ensures that all images input to the pose network receive the
         same augmentation.
         """
+        """
         for k in list(inputs):
             if "color" in k:
                 n, im, i = k
                 for i in range(self.num_scales):
-                    inputs[(n, im, i)] = self.resize[i](inputs[(n, im, i - 1)])
+                    inputs[(n, im, i)] = self.resize[i](inputs[(n, im, i - 1)])"""
 
         for k in list(inputs):
             f = inputs[k]
@@ -166,7 +167,7 @@ class MonoDataset(data.Dataset):
         #inputs[("color_aug", i, -1)]
         tgt_img = inputs[("color_aug", 0, -1)]
         ref_imgs = inputs[("color_aug", 1, -1)]
-        print("Heeere",tgt_img.shape,ref_imgs.shape,intrinsics.shape)
+        #print("Heeere",tgt_img.shape,ref_imgs.shape,intrinsics.shape)
         return tgt_img, ref_imgs, intrinsics, np.linalg.inv(intrinsics)
 
     def get_color(self, folder, frame_index, side, do_flip):
