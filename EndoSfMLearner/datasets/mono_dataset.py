@@ -141,16 +141,13 @@ class MonoDataset(data.Dataset):
         folder, frame_index, side = self.index_to_folder_and_frame_idx(index)
 
         poses = {}
-        if type(self).__name__ in ["CityscapesPreprocessedDataset", "CityscapesEvalDataset"]:
-            inputs.update(self.get_colors(folder, frame_index, side, do_flip))
-        else:
-            for i in self.frame_idxs:
-                if i == "s":
-                    other_side = {"r": "l", "l": "r"}[side]
-                    inputs[("color", i, -1)] = self.get_color(folder, frame_index, other_side, do_flip)
-                else:
-                    inputs[("color", i, -1)] = self.get_color(folder, frame_index + i, side, do_flip)
-        
+        for i in self.frame_idxs:
+            if i == "s":
+                other_side = {"r": "l", "l": "r"}[side]
+                inputs[("color", i, -1)] = self.get_color(folder, frame_index, other_side, do_flip)
+            else:
+                inputs[("color", i, -1)] = self.get_color(folder, frame_index + i, side, do_flip)
+    
         if do_color_aug:
             color_aug = transforms.ColorJitter(self.brightness, self.contrast, self.saturation, self.hue)
         else:
@@ -160,9 +157,9 @@ class MonoDataset(data.Dataset):
 
         intrinsics = self.load_intrinsics(folder, frame_index)
         #inputs[("color_aug", i, -1)]
-        print("Here",inputs[("color_aug", 0, -1)].shape)
-        print("Here",inputs[("color_aug", 1, -1)].shape)
-        
+        #print("Here",inputs[("color_aug", 0, -1)].shape)
+        #print("Here",inputs[("color_aug", 1, -1)].shape)
+
         tgt_img = inputs[("color_aug", 0, -1)]
         ref_imgs = inputs[("color_aug", 1, -1)]
         

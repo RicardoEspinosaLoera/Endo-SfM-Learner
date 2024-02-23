@@ -97,7 +97,7 @@ def main():
             output_writers.append(SummaryWriter(args.save_path/'valid'/str(i)))"""
 
     # Data loading code
-    """
+    
     normalize = custom_transforms.Normalize(mean=[0.45, 0.45, 0.45],
                                             std=[0.225, 0.225, 0.225])
 
@@ -108,7 +108,7 @@ def main():
     ])
 
     valid_transform = custom_transforms.Compose([custom_transforms.ArrayToTensor()])
-    """
+    
 
     print("=> fetching scenes in '{}'".format(args.data))
     
@@ -117,7 +117,7 @@ def main():
                          "cityscapes_preprocessed": datasets.CityscapesPreprocessedDataset,
                          "kitti_odom": datasets.KITTIOdomDataset,
                          "endovis": datasets.SCAREDDataset}"""
-
+    """
     dataset = SCAREDDataset
     fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
     fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
@@ -129,9 +129,9 @@ def main():
             [0,1],4, is_train=True, img_ext=".jpg")  
     val_set = dataset(
             args.data, val_filenames, 256, 320,
-            [0,1], 4, is_train=False, img_ext=".jpg")
+            [0,1], 4, is_train=False, img_ext=".jpg")"""
 
-    """if args.folder_type == 'sequence':
+    if args.folder_type == 'sequence':
         train_set = SequenceFolder(
             args.data,
             transform=train_transform,
@@ -146,13 +146,12 @@ def main():
             seed=args.seed,
             train=True,
             transform=train_transform
-        )"""
+        )
     
 
 
 
     # if no Groundtruth is avalaible, Validation set is the same type as training set to measure photometric loss from warping
-    """
     if args.with_gt:
         from datasets.validation_folders import ValidationSet
         val_set = ValidationSet(
@@ -169,7 +168,7 @@ def main():
             sequence_length=args.sequence_length,
             dataset=args.dataset
         )
-    """
+    
     #print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
     #print('{} samples found in {} valid scenes'.format(len(val_set), len(val_set.scenes)))
     train_loader = torch.utils.data.DataLoader(
@@ -292,7 +291,7 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
         tgt_img = tgt_img.to(device)
         ref_imgs = [img.to(device) for img in ref_imgs]
         intrinsics = intrinsics.to(device)
-        print("Heeere",len(tgt_img),len(ref_imgs),len(intrinsics))
+        print("Heeere",tgt_img.shape,ref_imgs.shape,intrinsics.shape)
         # compute output
         tgt_depth, ref_depths = compute_depth(disp_net, tgt_img, ref_imgs)
         #print("number fo reference images",len(ref_imgs))
