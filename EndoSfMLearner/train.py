@@ -97,7 +97,7 @@ def main():
             output_writers.append(SummaryWriter(args.save_path/'valid'/str(i)))"""
 
     # Data loading code
-    
+    """
     normalize = custom_transforms.Normalize(mean=[0.45, 0.45, 0.45],
                                             std=[0.225, 0.225, 0.225])
 
@@ -109,15 +109,15 @@ def main():
 
     valid_transform = custom_transforms.Compose([custom_transforms.ArrayToTensor()])
     
-
+    """
     print("=> fetching scenes in '{}'".format(args.data))
     
-    """
+    
     datasets_dict = {"kitti": datasets.KITTIRAWDataset,
                          "cityscapes_preprocessed": datasets.CityscapesPreprocessedDataset,
                          "kitti_odom": datasets.KITTIOdomDataset,
-                         "endovis": datasets.SCAREDDataset}"""
-    """
+                         "endovis": datasets.SCAREDDataset}
+
     dataset = SCAREDDataset
     fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
     fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
@@ -129,8 +129,9 @@ def main():
             [0,1],4, is_train=True, img_ext=".jpg")  
     val_set = dataset(
             args.data, val_filenames, 256, 320,
-            [0,1], 4, is_train=False, img_ext=".jpg")"""
+            [0,1], 4, is_train=False, img_ext=".jpg")
 
+    """
     if args.folder_type == 'sequence':
         train_set = SequenceFolder(
             args.data,
@@ -168,7 +169,7 @@ def main():
             sequence_length=args.sequence_length,
             dataset=args.dataset
         )
-    
+    """
     #print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
     #print('{} samples found in {} valid scenes'.format(len(val_set), len(val_set.scenes)))
     train_loader = torch.utils.data.DataLoader(
