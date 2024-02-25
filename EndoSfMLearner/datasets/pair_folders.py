@@ -26,8 +26,8 @@ class PairFolder(data.Dataset):
         self.root = Path(root)
         scene_list_path = 'train.txt' if train else 'val.txt'
         #print("Heeree",self.root)
-        #self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
-        self.scenes = [self.root/folder for folder in open(scene_list_path)]
+        self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
+        #self.scenes = [self.root/folder for folder in open(scene_list_path)]
         #print(scene_list_path)
         self.transform = transform
         self.crawl_folders()
@@ -60,7 +60,7 @@ class PairFolder(data.Dataset):
             #image_path = os.path.join(self.rootself.data_path, folder, "data", f_str)
             sample = {'intrinsics': intrinsic, 'tgt': os.path.join(self.root,folder,"data",str(frame_index)+".jpg"), 'ref_imgs': os.path.join(self.root,folder,"data",str(frame_index + 1)+".jpg")}
             pair_set.append(sample)
-        random.shuffle(pair_set)
+        #random.shuffle(pair_set)
         self.samples = pair_set
 
     def __getitem__(self, index):
