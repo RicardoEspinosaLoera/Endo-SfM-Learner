@@ -292,6 +292,8 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
     for i, (tgt_img, ref_imgs, intrinsics, intrinsics_inv) in enumerate(train_loader):
         log_losses = i > 0 and n_iter % args.print_freq == 0
 
+        print(len(tgt_img),len(ref_imgs),len(intrinsics))
+        print(tgt_img.shape,ref_imgs.shape,intrinsics.shape)
         # measure data loading time
         data_time.update(time.time() - end)
         tgt_img = tgt_img.to(device)
