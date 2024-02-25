@@ -18,36 +18,7 @@ class SCAREDDataset(MonoDataset):
                            [0, 0, 1]], dtype=np.float32)
 
                        
-        #256 / 320
-        #fx769.807403688120 fy769.720558534159 cx675.226397736271 cy548.903474592445 k1-0.454260397098776 k20.179156666748519 k3-0.0285017743214105 p1-0.00134889190333418 p20.000738912923806121 skew-0.141152521412316
-        """self.K = np.array([[2.40, -0.141152521412316, 2.11, 0],
-                           [0, 3.00,2.14, 0],
-                           [0, 0, 1, 0],
-                           [0, 0, 0, 1]], dtype=np.float32)"""
-        #RNNSLAM synthetic dataset
-        #256 / 320
-        #fx = 155.00297855750486 fy= 165.3365104613385 cx = 160.0; cy = 128.0;
-        #fy = 176.358213824 cy =  136.533333333
-        #fx = 154.63, fy = 154.74, cx = 160,cy = 128
-        """self.K = np.array([[0.48321875, 0, 0.5, 0],
-                           [0, 0.4835625,0.5, 0],
-                           [0, 0, 1, 0],
-                           [0, 0, 0, 1]], dtype=np.float32)"""
         
-                                   
-        #Colon10k dataset
-        #256 / 320
-        #Camera Intrinsics: Pinhole fx=145.4410 fy=145.4410 cx=135.6993 cy=107.8946 width=270 height=216
-        """self.K = np.array([[0.538875, 0, 0.50234375, 0],
-                           [0, 0.67359375,0.4992578125, 0],
-                           [0, 0, 1, 0],
-                           [0, 0, 0, 1]], dtype=np.float32)"""
-        """
-        Focal Lengths: fx ≈ 172.44, fy ≈ 172.44
-        Principal Points: cx ≈ 160.75, cy ≈ 127.81
-        Image Dimensions: width = 320, height = 256
-        """
-        # self.full_res_shape = (1280, 1024)
         self.side_map = {"2": 2, "3": 3, "l": 2, "r": 3}
 
     def check_depth(self):
@@ -66,9 +37,6 @@ class SCAREDDataset(MonoDataset):
         """Convert index in the dataset to a folder name, frame_idx and any other bits
         """
         line = self.filenames[index].split()
-        """if len(line) < 1:
-            print(line)
-            print(index)"""
 
         folder = line[0]
 
@@ -88,10 +56,7 @@ class SCAREDDataset(MonoDataset):
         #SCATER
         f_str = "{}{}".format(frame_index, self.img_ext)
         image_path = os.path.join(self.data_path, folder, "data", f_str)
-        #COLON10k
-
-        #f_str=str(frame_index) + self.img_ext
-        #image_path = os.path.join(self.data_path,f_str)
+        
             
         return image_path
 
