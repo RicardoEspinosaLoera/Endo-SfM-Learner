@@ -24,8 +24,8 @@ class PairFolder(data.Dataset):
         np.random.seed(seed)
         random.seed(seed)
         self.root = Path(root)
-        scene_list_path = 'train.txt' if train else 'validation.txt'
-        #print("Heeree",scene_list_path)
+        scene_list_path = 'train.txt' if train else 'val.txt'
+        print("Heeree",self.root/folder)
         #self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
         self.scenes = [self.root/folder for folder in open(scene_list_path)]
         #print(scene_list_path)
