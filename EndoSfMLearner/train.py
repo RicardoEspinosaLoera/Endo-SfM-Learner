@@ -158,9 +158,7 @@ def main():
             args.data,
             transform=valid_transform,
             seed=args.seed,
-            train=False,
-            sequence_length=args.sequence_length,
-            dataset=args.dataset
+            train=False
         )
     
     print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
