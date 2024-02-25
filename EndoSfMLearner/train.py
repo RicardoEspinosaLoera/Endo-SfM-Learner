@@ -154,7 +154,7 @@ def main():
             dataset=args.dataset
         )
     else:
-        val_set = SequenceFolder(
+        val_set = PairFolder(
             args.data,
             transform=valid_transform,
             seed=args.seed,

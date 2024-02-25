@@ -27,7 +27,7 @@ class PairFolder(data.Dataset):
         scene_list_path = 'train.txt' if train else 'val.txt'
         #print("Heeree",self.root)
         #self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
-        self.scenes = [file for file in open(scene_list_path)]
+        self.scenes = [self.root/folder for folder in open(scene_list_path)]
         #print(scene_list_path)
         self.transform = transform
         self.crawl_folders()
