@@ -33,7 +33,7 @@ class PairFolder(data.Dataset):
     def crawl_folders(self,):
         pair_set = []
         for scene in self.scenes:
-            print(scene)
+            
             """ 
                     self.K = np.array([[0.82, 0, 0.5, 0],
                            [0, 1.02, 0.5, 0],
@@ -44,9 +44,9 @@ class PairFolder(data.Dataset):
             intrinsics = np.array([[262.4, 0, 160],
                     [0, 261.12, 128],
                     [0, 0, 1]], dtype=np.float32)
-            imgs = sorted(scene.files('*.jpg'))
+            #imgs = sorted(scene.files('*.jpg'))
             #intrinsics = sorted(scene.files('*.txt'))
-
+            print(scene)
             for i in range(0, len(imgs)-1, 2):
                 intrinsic = intrinsics #np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
                 sample = {'intrinsics': intrinsic, 'tgt': imgs[i], 'ref_imgs': [imgs[i+1]]}
