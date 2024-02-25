@@ -122,10 +122,10 @@ def main():
     val_filenames = readlines(fpath_val)
     train_set = dataset(
             args.data, train_filenames, 256, 320,
-            [0,1],12, is_train=True, img_ext=".jpg")  
+            [0,1],4, is_train=True, img_ext=".jpg")  
     val_set = dataset(
             args.data, val_filenames, 256, 320,
-            [0,1], 12, is_train=False, img_ext=".jpg")
+            [0,1], 4, is_train=False, img_ext=".jpg")
 
     """
     if args.folder_type == 'sequence':
@@ -293,7 +293,7 @@ def train(args, train_loader, disp_net, pose_net, optimizer, epoch_size, logger)
         log_losses = i > 0 and n_iter % args.print_freq == 0
 
         #print(len(tgt_img),len(ref_imgs),len(intrinsics))
-        print(tgt_img.shape,ref_imgs.shape,intrinsics.shape)
+        #print(tgt_img.shape,ref_imgs.shape,intrinsics.shape)
         # measure data loading time
         data_time.update(time.time() - end)
         tgt_img = tgt_img.to(device)
@@ -486,6 +486,7 @@ def compute_depth(disp_net, tgt_img, ref_imgs):
 
     ref_depths = []
     for ref_img in ref_imgs:
+        print(ref_img.shape)
         ref_depth = [1/disp for disp in disp_net(ref_img)]
         ref_depths.append(ref_depth)
 
