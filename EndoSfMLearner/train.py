@@ -98,7 +98,7 @@ def main():
             output_writers.append(SummaryWriter(args.save_path/'valid'/str(i)))"""
 
     # Data loading code
-    """
+    
     normalize = custom_transforms.Normalize(mean=[0.45, 0.45, 0.45],
                                             std=[0.225, 0.225, 0.225])
 
@@ -110,14 +110,13 @@ def main():
 
     valid_transform = custom_transforms.Compose([custom_transforms.ArrayToTensor()])
     
-    """
     print("=> fetching scenes in '{}'".format(args.data))
     
-    
+    """
     dataset = SCAREDDataset
     fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
     fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
-    print(args.data)
+    #print(args.data)
     train_filenames = readlines(fpath_train)
     val_filenames = readlines(fpath_val)
     train_set = dataset(
@@ -126,8 +125,8 @@ def main():
     val_set = dataset(
             args.data, val_filenames, 256, 320,
             [0,1], 4, is_train=False, img_ext=".jpg")
-
     """
+    
     if args.folder_type == 'sequence':
         train_set = SequenceFolder(
             args.data,
@@ -146,8 +145,6 @@ def main():
         )
     
 
-
-
     # if no Groundtruth is avalaible, Validation set is the same type as training set to measure photometric loss from warping
     if args.with_gt:
         from datasets.validation_folders import ValidationSet
@@ -165,7 +162,7 @@ def main():
             sequence_length=args.sequence_length,
             dataset=args.dataset
         )
-    """
+    
     #print('{} samples found in {} train scenes'.format(len(train_set), len(train_set.scenes)))
     #print('{} samples found in {} valid scenes'.format(len(val_set), len(val_set.scenes)))
     
@@ -177,12 +174,13 @@ def main():
         val_set, batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)"""
 
+    """
     train_loader = DataLoader(
             train_set, args.batch_size, True,
             num_workers=args.workers, pin_memory=True, drop_last=True)
     val_loader = DataLoader(
             val_set, args.batch_size, True,
-            num_workers=args.workers, pin_memory=True, drop_last=True)            
+            num_workers=args.workers, pin_memory=True, drop_last=True)     """       
 
     if args.epoch_size == 0:
         args.epoch_size = len(train_loader)

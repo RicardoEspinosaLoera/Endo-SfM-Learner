@@ -24,7 +24,7 @@ class PairFolder(data.Dataset):
         np.random.seed(seed)
         random.seed(seed)
         self.root = Path(root)
-        scene_list_path = self.root/'train.txt' if train else self.root/'val.txt'
+        scene_list_path = 'train.txt' if train else 'val.txt'
         #self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
         self.scenes = [self.root/folder for folder in open(scene_list_path)]
         self.transform = transform
@@ -33,6 +33,7 @@ class PairFolder(data.Dataset):
     def crawl_folders(self,):
         pair_set = []
         for scene in self.scenes:
+            print(scene)
             """ 
                     self.K = np.array([[0.82, 0, 0.5, 0],
                            [0, 1.02, 0.5, 0],
