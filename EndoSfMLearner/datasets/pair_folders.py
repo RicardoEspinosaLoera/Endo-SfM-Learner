@@ -27,13 +27,14 @@ class PairFolder(data.Dataset):
         scene_list_path = 'train.txt' if train else 'validation.txt'
         #self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
         self.scenes = [self.root/folder for folder in open(scene_list_path)]
+        print(scene_list_path)
         self.transform = transform
         self.crawl_folders()
 
     def crawl_folders(self,):
         pair_set = []
         for scene in self.scenes:
-            print(scene)
+            #print(scene)
             """ 
                     self.K = np.array([[0.82, 0, 0.5, 0],
                            [0, 1.02, 0.5, 0],
