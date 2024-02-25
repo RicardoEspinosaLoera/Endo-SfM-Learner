@@ -157,9 +157,9 @@ class MonoDataset(data.Dataset):
 
         intrinsics = self.load_intrinsics(folder, frame_index)
         
-        tgt_img = self.to_tensor(inputs[("color_aug", 0, -1)])
-        ref_imgs = self.to_tensor(inputs[("color_aug", 1, -1)])
-        intrinsics = self.to_tensor(intrinsics)
+        tgt_img = inputs[("color_aug", 0, -1)]
+        ref_imgs = inputs[("color_aug", 1, -1)]
+        #intrinsics = self.to_tensor(intrinsics
         
         return tgt_img, ref_imgs, intrinsics, np.linalg.inv(intrinsics)
 
