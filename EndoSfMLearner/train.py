@@ -20,6 +20,7 @@ from datasets.scared_dataset import SCAREDDataset
 from loss_functions import compute_smooth_loss, compute_photo_and_geometry_loss, compute_errors
 from logger import TermLogger, AverageMeter
 #from tensorboardX import SummaryWriter
+from torch.utils.data import DataLoader
 import os
 import wandb
 
