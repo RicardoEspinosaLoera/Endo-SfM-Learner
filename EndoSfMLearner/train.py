@@ -487,6 +487,8 @@ def compute_depth(disp_net, tgt_img, ref_imgs):
     ref_depths = []
     for ref_img in ref_imgs:
         print(ref_img.shape)
+        ref_img = torch.unsqueeze(ref_img, 0)
+        print(ref_img.shape)
         ref_depth = [1/disp for disp in disp_net(ref_img)]
         ref_depths.append(ref_depth)
 
