@@ -57,7 +57,8 @@ class PairFolder(data.Dataset):
         
             #for i in range(0, len(imgs)-1, 2):
             intrinsic = intrinsics #np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
-            sample = {'intrinsics': intrinsic, 'tgt': folder + str(frame_index), 'ref_imgs': folder + str(frame_index + 1)}
+            #image_path = os.path.join(self.rootself.data_path, folder, "data", f_str)
+            sample = {'intrinsics': intrinsic, 'tgt': os.path.join(self.root,folder,"data",str(frame_index),".jpg") 'ref_imgs': os.path.join(self.root,folder,"data",str(frame_index + 1),".jpg")}
             pair_set.append(sample)
         random.shuffle(pair_set)
         self.samples = pair_set
