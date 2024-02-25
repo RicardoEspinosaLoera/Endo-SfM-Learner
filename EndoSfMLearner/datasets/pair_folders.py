@@ -44,13 +44,19 @@ class PairFolder(data.Dataset):
             intrinsics = np.array([[262.4, 0, 160],
                     [0, 261.12, 128],
                     [0, 0, 1]], dtype=np.float32)
-            #imgs = sorted(scene.files('*.jpg'))
+            imgs = scene.files('*.jpg')
             #intrinsics = sorted(scene.files('*.txt'))
-            print(scene)
-            for i in range(0, len(imgs)-1, 2):
-                intrinsic = intrinsics #np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
-                sample = {'intrinsics': intrinsic, 'tgt': imgs[i], 'ref_imgs': [imgs[i+1]]}
-                pair_set.append(sample)
+            #print(scene)
+
+            line = scene.split()
+  
+            folder = line[0]
+            frame_index = int(line[1])
+        
+            #for i in range(0, len(imgs)-1, 2):
+            intrinsic = intrinsics #np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
+            sample = {'intrinsics': intrinsic, 'tgt': folder + str(frame_index), 'ref_imgs': folder + str(frame_index + 1)}
+            pair_set.append(sample)
         random.shuffle(pair_set)
         self.samples = pair_set
 
