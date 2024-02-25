@@ -499,6 +499,7 @@ def compute_pose_with_inv(pose_net, tgt_img, ref_imgs):
     poses = []
     poses_inv = []
     for ref_img in ref_imgs:
+        print(tgt_img.shape,ref_img.shape)
         poses.append(pose_net(tgt_img, ref_img))
         poses_inv.append(pose_net(ref_img, tgt_img))
 
