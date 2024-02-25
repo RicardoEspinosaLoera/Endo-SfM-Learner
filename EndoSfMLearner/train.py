@@ -113,11 +113,6 @@ def main():
     print("=> fetching scenes in '{}'".format(args.data))
     
     
-    datasets_dict = {"kitti": datasets.KITTIRAWDataset,
-                         "cityscapes_preprocessed": datasets.CityscapesPreprocessedDataset,
-                         "kitti_odom": datasets.KITTIOdomDataset,
-                         "endovis": datasets.SCAREDDataset}
-
     dataset = SCAREDDataset
     fpath_train = os.path.join(os.path.dirname(__file__), "train.txt")
     fpath_val = os.path.join(os.path.dirname(__file__), "validation.txt")
