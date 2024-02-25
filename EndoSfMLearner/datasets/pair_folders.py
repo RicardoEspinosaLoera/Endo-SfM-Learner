@@ -44,7 +44,7 @@ class PairFolder(data.Dataset):
             intrinsics = np.array([[262.4, 0, 160],
                     [0, 261.12, 128],
                     [0, 0, 1]], dtype=np.float32)
-            imgs = scene.files('*.jpg')
+            #imgs = scene.files('*.jpg')
             #intrinsics = sorted(scene.files('*.txt'))
             #print(scene)
 
