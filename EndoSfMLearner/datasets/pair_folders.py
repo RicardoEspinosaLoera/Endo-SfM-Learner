@@ -33,7 +33,7 @@ class PairFolder(data.Dataset):
     def crawl_folders(self,):
         pair_set = []
         for scene in self.scenes:
-            
+            print(scene)
             """ 
                     self.K = np.array([[0.82, 0, 0.5, 0],
                            [0, 1.02, 0.5, 0],
