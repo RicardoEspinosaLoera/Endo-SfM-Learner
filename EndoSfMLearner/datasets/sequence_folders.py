@@ -26,7 +26,7 @@ class SequenceFolder(data.Dataset):
         random.seed(seed)
         self.root = Path(root)
         scene_list_path = self.root/'train.txt' if train else self.root/'val.txt'
-        self.scenes = [self.root/folder for folder in open(scene_list_path)]
+        self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
         self.transform = transform
         self.dataset = dataset
         self.k = skip_frames
@@ -39,13 +39,7 @@ class SequenceFolder(data.Dataset):
         shifts = list(range(-demi_length * self.k, demi_length * self.k + 1, self.k))
         shifts.pop(demi_length)
         for scene in self.scenes:
-            #print(scene/'cam.txt')
-            #intrinsics = np.genfromtxt(scene/'cam.txt').astype(np.float32).reshape((3, 3))
-            intrinsics = np.array([[0.82, 0, 0.5],
-                    [0, 1.02, 0.5],
-                    [0, 0, 1]], dtype=np.float32)
-            #print(intrinsics)
-            print(scene)
+            intrinsics = np.genfromtxt(scene/'cam.txt').astype(np.float32).reshape((3, 3))
             imgs = sorted(scene.files('*.jpg'))
 
             if len(imgs) < sequence_length:
