@@ -40,8 +40,8 @@ class PairFolder(data.Dataset):
                     [0, 261.12, 128],
                     [0, 0, 1]], dtype=np.float32)
             for i in range(0, len(imgs)-1, 2):
-                intrinsic = np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
-                sample = {'intrinsics': intrinsic, 'tgt': imgs[i], 'ref_imgs': [imgs[i+1]]}
+                #intrinsic = np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
+                sample = {'intrinsics': intrinsics, 'tgt': imgs[i], 'ref_imgs': [imgs[i+1]]}
                 pair_set.append(sample)
         random.shuffle(pair_set)
         self.samples = pair_set
