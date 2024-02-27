@@ -36,7 +36,7 @@ class ValidationSet(data.Dataset):
     def __init__(self, root, transform=None, dataset='nyu'):
         self.root = Path(root)
         scene_list_path = self.root/'val.txt'
-        self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
+        self.scenes = [self.root/folder[:] for folder in open(scene_list_path)]
         self.transform = transform
         self.dataset = dataset
         self.imgs, self.depth = crawl_folders(self.scenes, self.dataset)

@@ -24,49 +24,24 @@ class PairFolder(data.Dataset):
         np.random.seed(seed)
         random.seed(seed)
         self.root = Path(root)
-        scene_list_path = 'train.txt' if train else 'val.txt'
-        #print("Heeree",self.root)
+        scene_list_path = self.root/'train.txt' if train else self.root/'val.txt'
         self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
-        #self.scenes = [self.root/folder for folder in open(scene_list_path)]
-        #print(scene_list_path)
         self.transform = transform
         self.crawl_folders()
 
     def crawl_folders(self,):
         pair_set = []
         for scene in self.scenes:
-            #print(scene)
-            """ 
-                    self.K = np.array([[0.82, 0, 0.5, 0],
-                           [0, 1.02, 0.5, 0],
-                           [0, 0, 1, 0],
-                           [0, 0, 0, 1]], dtype=np.float32)
-            """
             # intrinsics = np.genfromtxt(scene/'cam.txt').astype(np.float32).reshape((3, 3))
-            intrinsics = np.array([[262.4, 0, 160],
-                    [0, 261.12, 128],
-                    [0, 0, 1]], dtype=np.float32)
-            #imgs = scene.files('*.jpg')
-            #intrinsics = sorted(scene.files('*.txt'))
-            #print(scene)
+            
+            imgs = sorted(scene.files('*.jpg'))
+            intrinsics = sorted(scene.files('*.txt'))
 
-            line = scene.split()
-  
-            folder = line[0]
-            frame_index = int(line[1])
-            """
             for i in range(0, len(imgs)-1, 2):
-                #intrinsic = np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
+                intrinsic = np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
                 sample = {'intrinsics': intrinsic, 'tgt': imgs[i], 'ref_imgs': [imgs[i+1]]}
-                pair_set.append(sample)"""
-
-            #for i in range(0, len(imgs)-1, 2):
-            for i in [-1,1]:
-                intrinsic = intrinsics #np.genfromtxt(intrinsics[int(i/2)]).astype(np.float32).reshape((3, 3))
-                #image_path = os.path.join(self.rootself.data_path, folder, "data", f_str)
-                sample = {'intrinsics': intrinsic, 'tgt': os.path.join(self.root,folder,"data",str(frame_index)+".jpg"), 'ref_imgs': [os.path.join(self.root,folder,"data",str(frame_index + i)+".jpg")]}
                 pair_set.append(sample)
-        #random.shuffle(pair_set)
+        random.shuffle(pair_set)
         self.samples = pair_set
 
     def __getitem__(self, index):
