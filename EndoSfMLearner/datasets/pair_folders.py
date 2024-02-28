@@ -25,7 +25,7 @@ class PairFolder(data.Dataset):
         random.seed(seed)
         self.root = Path(root)
         scene_list_path = self.root/'train.txt' if train else self.root/'val.txt'
-        self.scenes = [self.root/folder[:] for folder in open(scene_list_path)]
+        self.scenes = [self.root/folder[:-1] for folder in open(scene_list_path)]
         self.transform = transform
         self.crawl_folders()
 
