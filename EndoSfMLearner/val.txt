@@ -1,1 +1,1 @@
-validation_dataset
+ENDOVIS_endo/validation_dataset
