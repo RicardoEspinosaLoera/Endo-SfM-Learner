@@ -7,6 +7,7 @@ import os
 from tqdm import tqdm
 from path import Path
 import wandb
+import matplotlib.pyplot as plt
 
 wandb.init(project="EndoSfML-Testing", entity="respinosa")
 
