@@ -6,6 +6,11 @@ import numpy as np
 import os
 from tqdm import tqdm
 from path import Path
+import wandb
+
+wandb.init(project="EndoSfML-Testing", entity="respinosa")
+
+_DEPTH_COLORMAP = plt.get_cmap('plasma', 256)  # for plotting
 
 ################### Options ######################
 parser = argparse.ArgumentParser(description="NYUv2 Depth options")
@@ -55,6 +60,35 @@ def compute_depth_errors(gt, pred):
     elif args.dataset == 'kitti':
         return abs_rel, sq_rel, rmse, rmse_log, a1, a2, a3
 
+def colormap(inputs, normalize=True, torch_transpose=True):
+        if isinstance(inputs, torch.Tensor):
+            inputs = inputs.detach().cpu().numpy()
+
+        vis = inputs
+        if normalize:
+            ma = float(vis.max())
+            mi = float(vis.min())
+            d = ma - mi if ma != mi else 1e5
+            vis = (vis - mi) / d
+
+        if vis.ndim == 4:
+            vis = vis.transpose([0, 2, 3, 1])
+            vis = _DEPTH_COLORMAP(vis)
+            vis = vis[:, :, :, 0, :3]
+            if torch_transpose:
+                vis = vis.transpose(0, 3, 1, 2)
+        elif vis.ndim == 3:
+            vis = _DEPTH_COLORMAP(vis)
+            vis = vis[:, :, :, :3]
+            if torch_transpose:
+                vis = vis.transpose(0, 3, 1, 2)
+        elif vis.ndim == 2:
+            vis = _DEPTH_COLORMAP(vis)
+            vis = vis[..., :3]
+            if torch_transpose:
+                vis = vis.transpose(2, 0, 1)
+
+        return vis
 
 def depth_visualizer(data):
     """
@@ -120,7 +154,7 @@ class DepthEvalEigen():
 
         pred_depths = self.evaluate_depth(gt_depths, pred_depths, eval_mono=True)
 
-        """ Save result """
+        """
         # create folder for visualization result
         if args.vis_dir:
             save_folder = Path(args.vis_dir)/'vis_depth'
@@ -154,25 +188,21 @@ class DepthEvalEigen():
                 # save image
                 cat_img = cat_img.astype(np.uint8)
                 png_path = os.path.join(save_folder, "{:04}.png".format(i))
-                cv2.imwrite(png_path, cv2.cvtColor(cat_img, cv2.COLOR_RGB2BGR))
+                cv2.imwrite(png_path, cv2.cvtColor(cat_img, cv2.COLOR_RGB2BGR))"""
 
     def evaluate_depth(self, gt_depths, pred_depths, eval_mono=True):
-        """evaluate depth result
-        Args:
-            gt_depths (NxHxW): gt depths
-            pred_depths (NxHxW): predicted depths
-            split (str): data split for evaluation
-                - depth_eigen
-            eval_mono (bool): use median scaling if True
-        """
+
         errors = []
         ratios = []
         resized_pred_depths = []
 
         print("==> Evaluating depth result...")
         for i in tqdm(range(pred_depths.shape[0])):
+            disp = colormap(pred_depths[i])
+            wandb.log({"disp_testing": wandb.Image(disp.transpose(1, 2, 0))},step=i)
             if pred_depths[i].mean() != -1:
                 gt_depth = gt_depths[i]
+                
                 gt_height, gt_width = gt_depth.shape[:2]
 
                 # resizing prediction (based on inverse depth)
