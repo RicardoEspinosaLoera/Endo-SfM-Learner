@@ -11,6 +11,7 @@ import time
 import matplotlib.pyplot as plt
 import imageio
 from PIL import Image
+import cv2
 
 parser = argparse.ArgumentParser(description='Script for DispNet testing with corresponding groundTruth',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -31,7 +32,7 @@ _DEPTH_COLORMAP = plt.get_cmap('plasma', 256)  # for plotting
 
 def load_tensor_image(filename, args):
     #img = imread(filename).astype(np.float32)
-    img = Image.open(filename)
+    img = Image.open("D:\\Phd_Research\\Datasets\\SERV-CT\\SERV-CT\\"+filename)
     img = np.array(img).astype(np.float32)
     h,w,_ = img.shape
     #print("Heeeere",h,w)
@@ -107,11 +108,13 @@ def main():
     dataset_dir = Path(args.dataset_dir)
     print(dataset_dir)
 
-    if args.dataset_list is not None:
-        with open(args.dataset_list, 'r') as f:
-            test_files = list(f.read().splitlines())
-    else:
-        test_files=sorted(dataset_dir.files('*.jpg'))
+    #if args.dataset_list is not None:
+    with open("servt_test.txt", 'r') as f:
+        test_files = list(f.read().splitlines())
+        print(test_files)
+    #else:
+        #test_files=dataset_dir.files('*.jpg')
+        #print("Sorted")
 
     print('{} files to test'.format(len(test_files)))
   
@@ -121,7 +124,7 @@ def main():
     avg_time = 0
     for j in tqdm(range(len(test_files))):
         tgt_img = load_tensor_image(test_files[j], args)
-        # tgt_img = load_tensor_image( dataset_dir + test_files[j], args)
+        
 
         # compute speed
         torch.cuda.synchronize()
