@@ -32,7 +32,8 @@ _DEPTH_COLORMAP = plt.get_cmap('plasma', 256)  # for plotting
 
 def load_tensor_image(filename, args):
     #img = imread(filename).astype(np.float32)
-    img = Image.open("D:\\Phd_Research\\Datasets\\SERV-CT\\SERV-CT\\"+filename)
+    #img = Image.open("D:\\Phd_Research\\Datasets\\SERV-CT\\SERV-CT\\"+filename)
+    img = Image.open("D:\\Phd_Research\\Datasets\\Hamlyn\\"+filename)
     img = np.array(img).astype(np.float32)
     h,w,_ = img.shape
     #print("Heeeere",h,w)
@@ -109,7 +110,7 @@ def main():
     print(dataset_dir)
 
     #if args.dataset_list is not None:
-    with open("servt_test.txt", 'r') as f:
+    with open("hamlyn_test.txt", 'r') as f:
         test_files = list(f.read().splitlines())
         print(test_files)
     #else:
