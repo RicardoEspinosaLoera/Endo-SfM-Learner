@@ -137,6 +137,7 @@ def main():
             dataset=args.dataset
         )
     else:
+        print(PairFolder)
         train_set = PairFolder(
             args.data,
             seed=args.seed,
